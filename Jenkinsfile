@@ -26,6 +26,14 @@ pipeline {
                  }
              }
         }
-        
+        stage('updating k8s deployment'){
+            steps{
+                sh """
+                cat deployment.yml
+                sed -i 's/${JOB_NAME}.*/${JOB_NAME}:${BUILD_ID}/g' deployment.yml
+                cat deployment.yml
+                """
+            }
+        } 
     }
 }
