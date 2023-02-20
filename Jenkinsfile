@@ -18,6 +18,14 @@ pipeline {
                 
             }
         }   
-            
+        stage('Pushing image to docker hub') {
+            steps{
+                withCredentials([string(credentialsId: 'rajdeepsingh642', variable: 'dockerhub')]) {
+                sh "docker login -u rajdeepsingh642 -p ${dockerhub}"
+                sh 'docker image push rajdeepsingh642/$JOB_NAME:v1.$BUILD_ID'
+                 }
+             }
+        }
+        
     }
 }
